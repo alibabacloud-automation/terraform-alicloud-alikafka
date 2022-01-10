@@ -1,17 +1,12 @@
+#alicloud_alikafka_instance
+variable "create" {
+  description = "Whether to create instance. If false, you can specify an existing instance by setting 'instance_id'."
+  type        = bool
+  default     = true
+}
+
 variable "kafka_instance_name" {
   description = "The specification of kafka instance name."
-  type        = string
-  default     = "tf-kafka_instance_name_test"
-}
-
-variable "consumer_id" {
-  description = "The specification of kafka consumer_id."
-  type        = string
-  default     = "CID-alikafkaGroupDatasourceName"
-}
-
-variable "vswitch_id" {
-  description = "The specification of vswitch_id."
   type        = string
   default     = ""
 }
@@ -46,30 +41,10 @@ variable "io_max" {
   default     = "20"
 }
 
-variable "topic" {
-  default = "test_topic"
-}
-
-variable "availability_zone" {
-  description = "The available zone to launch modules."
+variable "vswitch_id" {
+  description = "The specification of vswitch_id."
   type        = string
   default     = ""
-}
-
-variable "local_topic" {
-  default = "false"
-}
-
-variable "compact_topic" {
-  default = "false"
-}
-
-variable "partition_num" {
-  default = "12"
-}
-
-variable "topic_remark" {
-  default = "kafka_topic-remark"
 }
 
 variable "security_group_id" {
@@ -78,14 +53,52 @@ variable "security_group_id" {
   default     = ""
 }
 
-variable "create" {
-  description = "Whether to create instance. If false, you can specify an existing instance by setting 'instance_id'."
-  type        = bool
-  default     = true
+#alicloud_alikafka_consumer_group
+variable "consumer_id" {
+  description = "The specification of kafka consumer_id."
+  type        = string
+  default     = ""
 }
 
 variable "instance_id" {
   description = "The instance_id used to launch several kafka. If set, the 'create' will be ignored."
+  type        = string
+  default     = ""
+}
+
+#alicloud_alikafka_topic
+variable "topic" {
+  description = "Name of the topic. Two topics on a single instance cannot have the same name."
+  type        = string
+  default     = ""
+}
+
+variable "local_topic" {
+  description = "Whether the topic is localTopic or not."
+  type        = bool
+  default     = false
+}
+
+variable "compact_topic" {
+  description = "Whether the topic is compactTopic or not."
+  type        = bool
+  default     = false
+}
+
+variable "partition_num" {
+  description = "The number of partitions of the topic."
+  type        = number
+  default     = 12
+}
+
+variable "topic_remark" {
+  description = "This attribute is a concise description of topic."
+  type        = string
+  default     = ""
+}
+
+variable "availability_zone" {
+  description = "The available zone to launch modules."
   type        = string
   default     = ""
 }

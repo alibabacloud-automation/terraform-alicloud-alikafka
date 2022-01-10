@@ -1,5 +1,5 @@
 resource "alicloud_alikafka_instance" "default" {
-  count          = var.instance_id != "" ? 0 : var.create ? 1 : 0
+  count          = var.create ? 1 : 0
   name           = var.kafka_instance_name
   topic_quota    = var.topic_quota
   disk_type      = var.disk_type
