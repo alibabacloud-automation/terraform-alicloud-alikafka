@@ -15,12 +15,17 @@ resource "alicloud_security_group" "default" {
   vpc_id = module.vpc.this_vpc_id
 }
 
+resource "random_integer" "default" {
+  min = 10000
+  max = 99999
+}
+
 module "example" {
   source = "../.."
 
   #alicloud_alikafka_instance
   create              = true
-  kafka_instance_name = var.kafka_instance_name
+  kafka_instance_name = "${var.kafka_instance_name}-${random_integer.default.result}"
   topic_quota         = var.topic_quota
   disk_type           = "1"
   disk_size           = var.disk_size
@@ -34,25 +39,6 @@ module "example" {
 
   #alicloud_alikafka_topic
   topic         = "alikafkaTopicName"
-  local_topic   = false
-  compact_topic = false
-  partition_num = var.partition_num
-  topic_remark  = var.topic_remark
-
-}
-
-module "use_instance_id" {
-  source = "../.."
-
-  #alicloud_alikafka_instance
-  create = false
-
-  #alicloud_alikafka_consumer_group
-  instance_id = module.example.this_kafka_instance_id
-  consumer_id = "CID-alikafkaGroupDatasourceName"
-
-  #alicloud_alikafka_topic
-  topic         = "newAlikafkaTopicName"
   local_topic   = false
   compact_topic = false
   partition_num = var.partition_num
